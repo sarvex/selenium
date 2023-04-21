@@ -5,24 +5,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
-    uses: ./.github/workflows/bazel.yml
-    with:
-      name: Build
-      cache-key: rust-build
-      run: bazel build //rust:selenium-manager
+  # build:
+  #   name: Build
+  #   uses: ./.github/workflows/bazel.yml
+  #   with:
+  #     name: Build
+  #     cache-key: rust-build
+  #     run: bazel build //rust:selenium-manager
 
   tests:
     name: Tests
-    needs: build
+    # needs: build
     uses: ./.github/workflows/bazel.yml
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: macos
-          - os: ubuntu
+          # - os: macos
+          # - os: ubuntu
           - os: windows
     with:
       name: Tests (${{ matrix.os }})

@@ -69,8 +69,8 @@ test --test_env=HOME
 
 # Expose necessary variables for Seleinum-Manager.
 
-test:windows --test_env=PROGRAMFILES
-test:windows --test_env="PROGRAMFILES(X86)"="C:\\Program Files (x86)"
+build:windows --test_env=PROGRAMFILES
+build:windows --test_env="PROGRAMFILES(X86)"="C:\\Program Files (x86)"
 
 test --test_timeout=1800
 

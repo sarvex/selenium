@@ -63,6 +63,9 @@ jobs:
         with:
           java-version: ${{ inputs.java-version }}
           distribution: 'temurin'
+      - name: Print environment variables
+        # if: failure() && runner.debug == '1'
+        run: env
       - name: Setup Bazel
         uses: p0deje/setup-bazel@0.2.0
         with:
