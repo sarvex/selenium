@@ -129,6 +129,12 @@ impl SeleniumManager for ChromeManager {
                         format_three_args(
                             WMIC_COMMAND_ENV,
                             ENV_PROGRAM_FILES,
+                            "",
+                            browser_path,
+                        ),
+                        format_three_args(
+                            WMIC_COMMAND_ENV,
+                            ENV_PROGRAM_FILES,
                             REMOVE_X86,
                             browser_path,
                         ),
