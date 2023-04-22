@@ -71,6 +71,8 @@ test --test_env=HOME
 
 build:windows --action_env=PROGRAMFILES
 build:windows --action_env="PROGRAMFILES(X86)"="C:\\Program Files (x86)"
+test:windows --test_env=PROGRAMFILES
+test:windows --test_env="PROGRAMFILES(X86)"="C:\\Program Files (x86)"
 
 test --test_timeout=1800
 
