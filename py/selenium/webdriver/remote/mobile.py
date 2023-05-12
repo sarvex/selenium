@@ -33,7 +33,7 @@ class Mobile:
 
         @property
         def data(self):
-            return (self.mask / 4) > 0
+            return self.mask > 0
 
     ALL_NETWORK = ConnectionType(6)
     WIFI_NETWORK = ConnectionType(2)

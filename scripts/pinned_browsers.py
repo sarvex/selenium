@@ -24,27 +24,33 @@ def chromedriver():
 
     content = ""
 
-    linux = 'https://chromedriver.storage.googleapis.com/%s/chromedriver_linux64.zip' % v
+    linux = f'https://chromedriver.storage.googleapis.com/{v}/chromedriver_linux64.zip'
     sha = calculate_hash(linux)
-    content = content + """
+    content += """
     http_archive(
         name = "linux_chromedriver",
         url = "%s",
         sha256 = "%s",
         build_file_content = "exports_files([\\"chromedriver\\"])",
     )
-    """ % (linux, sha)
+    """ % (
+        linux,
+        sha,
+    )
 
-    mac = 'https://chromedriver.storage.googleapis.com/%s/chromedriver_mac64.zip' % v
+    mac = f'https://chromedriver.storage.googleapis.com/{v}/chromedriver_mac64.zip'
     sha = calculate_hash(mac)
-    content = content + """
+    content += """
     http_archive(
         name = "mac_chromedriver",
         url = "%s",
         sha256 = "%s",
         build_file_content = "exports_files([\\"chromedriver\\"])",
     )
-    """ % (mac, sha)
+    """ % (
+        mac,
+        sha,
+    )
     return content
 
 def chrome():
@@ -57,34 +63,39 @@ def chrome():
     for v in range(max_version, min_version, -1):
         r = http.request(
             'HEAD',
-            'https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/%s/chrome-linux.zip' % v)
+            f'https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/{v}/chrome-linux.zip',
+        )
         if r.status != 200:
             continue
 
         r = http.request(
             'HEAD',
-            'https://storage.googleapis.com/chromium-browser-snapshots/Mac/%s/chrome-mac.zip' % v)
+            f'https://storage.googleapis.com/chromium-browser-snapshots/Mac/{v}/chrome-mac.zip',
+        )
         if r.status != 200:
             continue
 
         content = ""
 
-        linux = 'https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/%s/chrome-linux.zip' % v
+        linux = f'https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/{v}/chrome-linux.zip'
         sha = calculate_hash(linux)
 
-        content = content + """
+        content += """
     http_archive(
         name = "linux_chrome",
         url = "%s",
         sha256 = "%s",
         build_file_content = "exports_files([\\"chrome-linux\\"])",
     )
-    """ % (linux, sha)
+    """ % (
+            linux,
+            sha,
+        )
 
-        mac = 'https://storage.googleapis.com/chromium-browser-snapshots/Mac/%s/chrome-mac.zip' % v
+        mac = f'https://storage.googleapis.com/chromium-browser-snapshots/Mac/{v}/chrome-mac.zip'
         sha = calculate_hash(mac)
 
-        content = content + """
+        content += """
     http_archive(
         name = "mac_chrome",
         url = "%s",
@@ -92,7 +103,10 @@ def chrome():
         strip_prefix = "chrome-mac",
         build_file_content = "exports_files([\\"Chromium.app\\"])",
     )
-    """ % (mac, sha)
+    """ % (
+            mac,
+            sha,
+        )
 
         return content
     raise RuntimeError("Cannot find stable chrome")
@@ -103,10 +117,10 @@ def edge():
 
     content = ""
 
-    edge = "https://officecdn-microsoft-com.akamaized.net/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/MicrosoftEdge-%s.pkg?platform=Mac&Consent=0&channel=Stable" % v
+    edge = f"https://officecdn-microsoft-com.akamaized.net/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/MicrosoftEdge-{v}.pkg?platform=Mac&Consent=0&channel=Stable"
     sha = calculate_hash(edge)
 
-    content = content + """
+    content += """
     pkg_archive(
         name = "mac_edge",
         url = "%s",
@@ -116,7 +130,11 @@ def edge():
         },
         build_file_content = "exports_files([\\"Edge.app\\"])",
     )
-    """ % (edge, sha, v)
+    """ % (
+        edge,
+        sha,
+        v,
+    )
 
     return content
 
@@ -126,27 +144,33 @@ def edgedriver():
 
     content = ""
 
-    linux = "https://msedgedriver.azureedge.net/%s/edgedriver_linux64.zip" % v
+    linux = f"https://msedgedriver.azureedge.net/{v}/edgedriver_linux64.zip"
     sha = calculate_hash(linux)
-    content = content + """
+    content += """
     http_archive(
         name = "linux_edgedriver",
         url = "%s",
         sha256 = "%s",
         build_file_content = "exports_files([\\"msedgedriver\\"])",
     )
-    """ % (linux, sha)
+    """ % (
+        linux,
+        sha,
+    )
 
-    mac = "https://msedgedriver.azureedge.net/%s/edgedriver_mac64.zip" % v
+    mac = f"https://msedgedriver.azureedge.net/{v}/edgedriver_mac64.zip"
     sha = calculate_hash(mac)
-    content = content + """
+    content += """
     http_archive(
         name = "mac_edgedriver",
         url = "%s",
         sha256 = "%s",
         build_file_content = "exports_files([\\"msedgedriver\\"])",
     )
-    """ % (mac, sha)
+    """ % (
+        mac,
+        sha,
+    )
     return content
 
 def geckodriver():
@@ -187,27 +211,33 @@ def firefox():
 
     content = ""
 
-    linux = "https://ftp.mozilla.org/pub/firefox/releases/%s/linux-x86_64/en-US/firefox-%s.tar.bz2" % (v, v)
+    linux = f"https://ftp.mozilla.org/pub/firefox/releases/{v}/linux-x86_64/en-US/firefox-{v}.tar.bz2"
     sha = calculate_hash(linux)
-    content = content + """
+    content += """
     http_archive(
         name = "linux_firefox",
         url = "%s",
         sha256 = "%s",
         build_file_content = "exports_files([\\"firefox\\"])",
     )
-    """ % (linux, sha)
+    """ % (
+        linux,
+        sha,
+    )
 
     mac = "https://ftp.mozilla.org/pub/firefox/releases/%s/mac/en-US/Firefox%%20%s.dmg" % (v, v)
     sha = calculate_hash(mac)
-    content = content + """
+    content += """
     dmg_archive(
         name = "mac_firefox",
         url = "%s",
         sha256 = "%s",
         build_file_content = "exports_files([\\"Firefox.app\\"])",
     )
-    """ % (mac, sha)
+    """ % (
+        mac,
+        sha,
+    )
 
     return content
 
@@ -223,7 +253,7 @@ load("//common/private:pkg_archive.bzl", "pkg_archive")
 def pin_browsers():
     local_drivers()
 """
-    content = content + firefox()
+    content += firefox()
     content = content + geckodriver()
     content = content + edge()
     content = content + edgedriver()

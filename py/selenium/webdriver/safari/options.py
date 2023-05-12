@@ -25,9 +25,7 @@ class Log:
         self.level = None
 
     def to_capabilities(self) -> dict:
-        if self.level:
-            return {"log": {"level": self.level}}
-        return {}
+        return {"log": {"level": self.level}} if self.level else {}
 
 
 class Options(ArgOptions):
@@ -74,7 +72,7 @@ class Options(ArgOptions):
             opts["args"] = self._arguments
         if self._binary_location:
             opts["binary"] = self._binary_location
-        opts.update(self.log.to_capabilities())
+        opts |= self.log.to_capabilities()
 
         if opts:
             caps[Options.KEY] = opts

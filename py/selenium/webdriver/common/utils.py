@@ -134,9 +134,7 @@ def keys_to_typing(value: Iterable[AnyKey]) -> List[str]:
             _typing.append(val)
         elif isinstance(val, (int, float)):
             val = str(val)
-            for i in range(len(val)):
-                _typing.append(val[i])
+            _typing.extend(val[i] for i in range(len(val)))
         else:
-            for i in range(len(val)):
-                _typing.append(val[i])
+            _typing.extend(val[i] for i in range(len(val)))
     return _typing

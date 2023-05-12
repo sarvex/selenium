@@ -49,7 +49,7 @@ def pytest_addoption(parser):
         choices=drivers,
         dest="drivers",
         metavar="DRIVER",
-        help="driver to run tests against ({})".format(", ".join(drivers)),
+        help=f'driver to run tests against ({", ".join(drivers)})',
     )
     parser.addoption("--browser-binary", action="store", dest="binary", help="location of the browser binary")
     parser.addoption(
@@ -93,11 +93,10 @@ def driver(request):
     marker = request.node.get_closest_marker(f"xfail_{driver_class.lower()}")
 
     if marker is not None:
-        if "run" in marker.kwargs:
-            if marker.kwargs["run"] is False:
-                pytest.skip()
-                yield
-                return
+        if "run" in marker.kwargs and marker.kwargs["run"] is False:
+            pytest.skip()
+            yield
+            return
         if "raises" in marker.kwargs:
             marker.kwargs.pop("raises")
         pytest.xfail(**marker.kwargs)
@@ -121,7 +120,7 @@ def driver(request):
             options = get_options(driver_class, request.config)
         if driver_class == "Remote":
             capabilities = DesiredCapabilities.FIREFOX.copy()
-            kwargs.update({"desired_capabilities": capabilities})
+            kwargs["desired_capabilities"] = capabilities
             options = get_options("Firefox", request.config)
         if driver_class == "WebKitGTK":
             options = get_options(driver_class, request.config)
@@ -165,7 +164,7 @@ def get_options(driver_class, config):
         if not options:
             options = getattr(webdriver, f"{driver_class}Options")()
 
-        if driver_class == "Chrome" or driver_class == "Edge":
+        if driver_class in ["Chrome", "Edge"]:
             options.add_argument("--headless=new")
         if driver_class == "Firefox":
             options.add_argument("-headless")

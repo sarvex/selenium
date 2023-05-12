@@ -22,8 +22,7 @@ from selenium.webdriver import Firefox
 
 @pytest.fixture
 def capabilities():
-    capabilities = {"marionette": True}
-    return capabilities
+    return {"marionette": True}
 
 
 @pytest.fixture

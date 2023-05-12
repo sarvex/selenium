@@ -39,7 +39,7 @@ class DriverFinder:
         try:
             path = shutil.which(service.path) or SeleniumManager().driver_location(options)
         except WebDriverException as err:
-            logger.warning("Unable to obtain driver using Selenium Manager: " + err.msg)
+            logger.warning(f"Unable to obtain driver using Selenium Manager: {err.msg}")
             raise err
 
         return path

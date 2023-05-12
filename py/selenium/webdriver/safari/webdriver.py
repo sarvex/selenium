@@ -130,8 +130,7 @@ class WebDriver(RemoteWebDriver):
         if not isinstance(value, bool):
             raise WebDriverException("Value of a session permission must be set to True or False.")
 
-        payload = {}
-        payload[permission] = value
+        payload = {permission: value}
         self.execute("SET_PERMISSIONS", {"permissions": payload})
 
     # First available in Safari 11.1 and Safari Technology Preview 41.
@@ -145,10 +144,7 @@ class WebDriver(RemoteWebDriver):
             return None
 
         value = permissions[permission]
-        if not isinstance(value, bool):
-            return None
-
-        return value
+        return None if not isinstance(value, bool) else value
 
     # First available in Safari 11.1 and Safari Technology Preview 42.
     def debug(self):

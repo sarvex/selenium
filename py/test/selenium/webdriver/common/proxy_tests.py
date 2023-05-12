@@ -139,7 +139,6 @@ def test_can_init_empty_proxy():
     desired_capabilities = {}
     proxy.add_to_capabilities(desired_capabilities)
 
-    proxy_capabilities = {}
-    proxy_capabilities["proxyType"] = "UNSPECIFIED"
+    proxy_capabilities = {"proxyType": "UNSPECIFIED"}
     expected_capabilities = {"proxy": proxy_capabilities}
     assert expected_capabilities == desired_capabilities

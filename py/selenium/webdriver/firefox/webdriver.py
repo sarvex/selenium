@@ -230,9 +230,10 @@ class WebDriver(RemoteWebDriver):
         will not cause a runtime error.
         """
         try:
-            if isinstance(self.binary, FirefoxBinary):
-                if hasattr(self.binary._log_file, "close"):
-                    self.binary._log_file.close()
+            if isinstance(self.binary, FirefoxBinary) and hasattr(
+                self.binary._log_file, "close"
+            ):
+                self.binary._log_file.close()
         except Exception:
             logger.exception("Unable to close open file handle for firefox binary log file.")
 

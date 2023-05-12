@@ -84,7 +84,7 @@ class Service(ABC):
 
     @path.setter
     def path(self, value: str) -> None:
-        self._path = str(value)
+        self._path = value
 
     def start(self) -> None:
         """Starts the Service.
@@ -108,8 +108,7 @@ class Service(ABC):
 
     def assert_process_still_running(self) -> None:
         """Check if the underlying process is still running."""
-        return_code = self.process.poll()
-        if return_code:
+        if return_code := self.process.poll():
             raise WebDriverException(f"Service {self._path} unexpectedly exited. Status code was: {return_code}")
 
     def is_connectable(self) -> bool:

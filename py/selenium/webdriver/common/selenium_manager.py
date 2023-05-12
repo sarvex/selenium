@@ -90,11 +90,8 @@ class SeleniumManager:
         args = [str(self.get_binary()), "--browser", browser, "--output", "json"]
 
         if options.browser_version:
-            args.append("--browser-version")
-            args.append(str(options.browser_version))
-
-        binary_location = getattr(options, "binary_location", None)
-        if binary_location:
+            args.extend(("--browser-version", str(options.browser_version)))
+        if binary_location := getattr(options, "binary_location", None):
             args.append("--browser-path")
             args.append(str(binary_location))
 
@@ -120,9 +117,8 @@ class SeleniumManager:
         result = output["result"]["message"]
         if completed_proc.returncode:
             raise SeleniumManagerException(f"Selenium Manager failed for: {command}.\n{result}{stderr}")
-        else:
-            # Selenium Manager exited successfully, return executable path and print warnings
-            for item in output["logs"]:
-                if item["level"] == "WARN":
-                    logger.warning(item["message"])
-            return result
+        # Selenium Manager exited successfully, return executable path and print warnings
+        for item in output["logs"]:
+            if item["level"] == "WARN":
+                logger.warning(item["message"])
+        return result
